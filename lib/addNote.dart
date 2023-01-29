@@ -50,12 +50,15 @@ class _AddNoteState extends State<AddNote> {
       await ref.putFile(file!);
       imageURL = await ref.getDownloadURL();
 
-      await FirebaseFirestore.instance.collection('notes').add({
+      await FirebaseFirestore.instance
+          .collection('notes')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .set({
         'title': title,
         'content': content,
         'imageURL': imageURL,
-        'uid': FirebaseAuth.instance.currentUser!.uid,
       });
+      // });
       Get.to(HomePage());
     }
   }
